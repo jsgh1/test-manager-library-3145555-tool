@@ -2,6 +2,18 @@
 
 Run with **Node.js 18+**, no third-party packages.
 
+## Windows PowerShell with the running Docker stack (recommended)
+
+From the cloned `test-manager-library-3145555-tool` folder, run:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\\Iniciar-Semillero.ps1"
+```
+
+This helper reads `../test-manager-library-3145555-infra/.env`, copies `seed.mjs` into the **already running** React/Node container, and calls the Laravel HTTP API at `http://api:8000/api/v1`. It needs no Node installation on the Windows host and does **not** write directly to PostgreSQL. The Docker stack must already be running. Do not paste or commit the local `.env`.
+
+**Expected:** 40 new books, 10 members, 15 loans. Due to the documented API date conflict, the three overdue fixtures cannot be generated legitimately in the assessment time window.
+
 ## Usage
 
 Start the Laravel API with a migrated PostgreSQL database and admin provisioned by deployment. Then supply environment variables `API_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and run `npm run seed`.
