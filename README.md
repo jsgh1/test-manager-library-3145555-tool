@@ -1,50 +1,21 @@
-# test-manager-library-3145555-tool
+# Manager Library — API-only demonstration generator (T-21)
 
-> **Prueba técnica · Ficha ADSO 3145555**
-> Horario: **miércoles 14 de octubre de 2026, de 6:50 a. m. a 11:00 a. m.** (hora Colombia). Entrega a las **11:00 a. m.**
+Run with **Node.js 18+**, no third-party packages.
 
-Este repositorio guarda las **utilidades** de *Manager Library*: el sembrador de datos de demostración, que usa la API. **Empieza vacío a propósito**: se construye en el fork de cada aprendiz.
+## Usage
 
-## Instrucciones
+Start the Laravel API with a migrated PostgreSQL database and admin provisioned by deployment. Then supply environment variables `API_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and run `npm run seed`.
 
-Cada aprendiz debe **crear el fork** de los seis repositorios del proyecto y **resolver el proyecto
-con el spec planteado**.
+For example, in PowerShell:
+- `$env:API_URL = "http://localhost:8000/api/v1"`
+- `$env:ADMIN_USERNAME = "admin"`
+- `$env:ADMIN_PASSWORD = Read-Host "Admin password"`
+- `npm run seed`
 
-1. Hacer fork, a su cuenta de GitHub, de cada repositorio de la tabla del final.
-2. Leer el spec en [`test-manager-library-3145555-docs`](https://github.com/code-sena/test-manager-library-3145555-docs).
-   Se entrega en dos versiones: `spec-python/` y `spec-.net/`.
-3. Desarrollar en los forks.
+The script creates **40 books, 10 members and 15 loans**, and queries the report/overdue API. It uses **HTTP only**, never direct SQL or privileged endpoints. Each run creates new unique demonstration identifiers. The sample categories are the five server-seeded canonical records.
 
-## El reto se desarrolla con React y PHP (Laravel)
+## Acceptance constraint
 
-El spec está escrito para Python y para .NET, pero el reto **no** se hace en esos lenguajes:
+**T-21 is only partially satisfiable as written.** It also requires three overdue loans, while the reference API creates loans from server time and assigns due time 14 days later. No endpoint exists for backdating, adjusting the clock, or creating aged demo fixtures. As recorded in the SDD adaptation, do **not** claim three overdue lines were generated or bypass the API with SQL. Instructor clarification is required for this particular acceptance item.
 
-| Capa | Tecnología del reto |
-|---|---|
-| Frontend | React |
-| Backend | PHP con Laravel |
-
-Lo que el spec define sobre el negocio —historias, criterios de aceptación, reglas, contrato de la
-API, modelo de datos— se respeta. Lo que define sobre la tecnología se traduce a React y Laravel.
-
-## La prueba no consiste en escribir el código
-
-El propósito principal es ver la **capacidad de desempeño con SDD** (*Spec-Driven Development*,
-desarrollo guiado por especificación): cómo se lee, se interpreta y se aplica una especificación
-para llevarla a un stack distinto. El código es el medio, no el fin.
-
-## Entrega
-
-Cuenta lo que quede **subido a los forks antes de las 11:00 a. m.** Lo que llegue después no se revisa.
-No hay prórroga: suban avances parciales con commits pequeños durante la prueba.
-
-## Los seis repositorios
-
-| Repositorio | Qué va ahí |
-|---|---|
-| [`test-manager-library-3145555-docs`](https://github.com/code-sena/test-manager-library-3145555-docs) | El spec: `spec-python/` y `spec-.net/` |
-| [`test-manager-library-3145555-api`](https://github.com/code-sena/test-manager-library-3145555-api) | Backend en PHP (Laravel) |
-| [`test-manager-library-3145555-app`](https://github.com/code-sena/test-manager-library-3145555-app) | Frontend en React |
-| [`test-manager-library-3145555-page`](https://github.com/code-sena/test-manager-library-3145555-page) | Sitio público estático de presentación |
-| [`test-manager-library-3145555-infra`](https://github.com/code-sena/test-manager-library-3145555-infra) | Contenedores, red, volúmenes y motor de base de datos vacío |
-| [`test-manager-library-3145555-tool`](https://github.com/code-sena/test-manager-library-3145555-tool) | Utilidades: sembrador de datos de demostración |
+No secrets are embedded in this source.
