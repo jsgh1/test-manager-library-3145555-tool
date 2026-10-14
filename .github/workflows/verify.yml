@@ -1,0 +1,23 @@
+name: Verify API demo tool
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Node seeder syntax
+        run: node --check seed.mjs
+      - name: Validate PowerShell launcher syntax
+        shell: pwsh
+        run: |
+          $source = Get-Content -LiteralPath ./Iniciar-Semillero.ps1 -Raw
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseInput($source, [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { throw ($errors | Out-String) }
